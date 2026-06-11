@@ -124,6 +124,116 @@ if (reduceMotion) {
     .to('.manifesto-kicker', { color: '#C02B53', duration: 3 }, 2.5);
 
   /* ----------------------------------------------------------
+     ESSÊNCIA — masked portrait entrance
+     ---------------------------------------------------------- */
+  const essenciaTrigger = { trigger: '.essencia-figure', start: 'top 82%', once: true };
+
+  gsap.fromTo('.essencia-mask',
+    { clipPath: 'inset(0% 0% 100% 0%)' },
+    { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.3, ease: 'power3.inOut', scrollTrigger: essenciaTrigger });
+  gsap.fromTo('.essencia-mask img',
+    { scale: 1.28 },
+    { scale: 1, duration: 1.8, ease: 'power3.out', scrollTrigger: essenciaTrigger });
+  gsap.fromTo(['.essencia-caption', '.essencia-star'],
+    { autoAlpha: 0, y: 18 },
+    { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.12, delay: 0.5, ease: 'power3.out', scrollTrigger: essenciaTrigger });
+
+  /* ----------------------------------------------------------
+     DEPOIMENTOS — draggable editorial slider
+     ---------------------------------------------------------- */
+  const viewport = document.getElementById('depo-viewport');
+  const track = document.getElementById('depo-track');
+  const slides = gsap.utils.toArray('.depo-slide');
+  const prevBtn = document.getElementById('depo-prev');
+  const nextBtn = document.getElementById('depo-next');
+  const counterEl = document.getElementById('depo-current');
+
+  let depoIndex = 0;
+  const xSetter = gsap.quickSetter(track, 'x', 'px');
+
+  const targetX = (i) =>
+    -slides[i].offsetLeft + (viewport.clientWidth - slides[i].offsetWidth) / 2;
+
+  function renderDepo(animate = true) {
+    gsap.to(track, {
+      x: targetX(depoIndex),
+      duration: animate ? 0.85 : 0,
+      ease: 'power3.out',
+      overwrite: 'auto',
+    });
+    slides.forEach((slide, i) => {
+      gsap.to(slide, { opacity: i === depoIndex ? 1 : 0.35, duration: 0.5, overwrite: 'auto' });
+    });
+    counterEl.textContent = String(depoIndex + 1).padStart(2, '0');
+    prevBtn.disabled = depoIndex === 0;
+    nextBtn.disabled = depoIndex === slides.length - 1;
+  }
+
+  const goTo = (i) => {
+    depoIndex = gsap.utils.clamp(0, slides.length - 1, i);
+    renderDepo();
+  };
+
+  prevBtn.addEventListener('click', () => goTo(depoIndex - 1));
+  nextBtn.addEventListener('click', () => goTo(depoIndex + 1));
+
+  viewport.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(depoIndex - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(depoIndex + 1); }
+  });
+
+  // drag / swipe
+  let dragStartX = 0;
+  let dragBaseX = 0;
+  let dragging = false;
+
+  viewport.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    dragStartX = e.clientX;
+    dragBaseX = gsap.getProperty(track, 'x');
+    gsap.killTweensOf(track);
+    viewport.setPointerCapture(e.pointerId);
+  });
+
+  viewport.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const delta = e.clientX - dragStartX;
+    const min = targetX(slides.length - 1);
+    const max = targetX(0);
+    let next = dragBaseX + delta;
+    if (next > max) next = max + (next - max) * 0.25; // edge resistance
+    if (next < min) next = min + (next - min) * 0.25;
+    xSetter(next);
+  });
+
+  const endDrag = (e) => {
+    if (!dragging) return;
+    dragging = false;
+    const delta = e.clientX - dragStartX;
+    if (delta < -60) goTo(depoIndex + 1);
+    else if (delta > 60) goTo(depoIndex - 1);
+    else renderDepo();
+  };
+
+  viewport.addEventListener('pointerup', endDrag);
+  viewport.addEventListener('pointercancel', endDrag);
+
+  window.addEventListener('resize', () => renderDepo(false));
+  renderDepo(false);
+
+  /* ----------------------------------------------------------
+     INDICAÇÃO — R$ 200 figure ignition
+     ---------------------------------------------------------- */
+  gsap.fromTo('.indicacao-value',
+    { clipPath: 'inset(0% 100% 0% 0%)' },
+    {
+      clipPath: 'inset(0% 0% 0% 0%)',
+      duration: 1.4,
+      ease: 'power3.inOut',
+      scrollTrigger: { trigger: '.indicacao-value', start: 'top 80%', once: true },
+    });
+
+  /* ----------------------------------------------------------
      SCROLL REVEALS
      ---------------------------------------------------------- */
   gsap.utils.toArray('[data-reveal]').forEach((el) => {
@@ -172,6 +282,37 @@ if (reduceMotion) {
     });
   }
 }
+
+/* ============================================================
+   REFERRAL FORM — no backend integration is verified for this
+   form, so submission never fakes success: it reveals an honest
+   "integration pending" notice and routes the typed data to the
+   verified WhatsApp channel instead. Runs regardless of motion
+   preferences.
+   ============================================================ */
+const refForm = document.getElementById('ref-form');
+
+refForm?.addEventListener('submit', (e) => {
+  e.preventDefault(); // only fires when native validation passes
+  const data = new FormData(refForm);
+  const text =
+    'Olá! Quero fazer uma indicação pelo Programa de Indicação.\n\n' +
+    'Meus dados:\n' +
+    `Nome: ${data.get('ref-name')}\n` +
+    `E-mail: ${data.get('ref-email')}\n` +
+    `Telefone: ${data.get('ref-phone')}\n\n` +
+    'Quem estou indicando:\n' +
+    `Empresa/Pessoa: ${data.get('ref-company')}\n` +
+    `E-mail: ${data.get('ref-ind-email')}\n` +
+    `Telefone: ${data.get('ref-ind-phone')}`;
+
+  const whatsLink = document.getElementById('ref-whats');
+  whatsLink.href = `https://wa.me/5527998971712?text=${encodeURIComponent(text)}`;
+
+  const pending = document.getElementById('ref-pending');
+  pending.hidden = false;
+  whatsLink.focus();
+});
 
 /* ============================================================
    CUSTOM CURSOR (independent of reduced-motion guard above,

@@ -8,9 +8,16 @@ Conceito experimental de homepage para a **Alluré Branding** — independente d
 **Dark editorial noir.** Um dossiê de marca em fundo carvão, onde a tipografia Magiona Display
 em escala monumental conduz a página. A pergunta *"Sua marca é realmente sua?"* é decomposta
 em três atos tipográficos, com o *"sua?"* carmim gigante carimbado sobre o retrato em arco da
-fundadora. Capítulos numerados (01 Essência, 02 Processo), uma transição manifesto que vira a
-página do escuro para o creme, fechamento em chapa carmim e rodapé cortado por um "Alluré"
-colossal em contorno.
+fundadora. Capítulos numerados (01 Essência, 02 Processo, 03 Marcas, 04 Depoimentos,
+05 Indicação), uma transição manifesto que vira a página do escuro para o creme, fechamento
+em chapa carmim e rodapé cortado por um "Alluré" colossal em contorno.
+
+## Integração pendente
+
+O formulário do Programa de Indicação não possui backend verificado (o site estável também
+não envia os dados — apenas simula sucesso). Aqui o envio nunca simula sucesso: ao submeter,
+um aviso de integração pendente aparece e oferece a conclusão via WhatsApp verificado, com a
+mensagem pré-preenchida com os dados digitados.
 
 ## Stack
 
