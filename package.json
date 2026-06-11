@@ -1,0 +1,18 @@
+{
+  "name": "allure-awwwards-concept",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Alluré Branding — experimental Awwwards-level homepage concept (Dossiê Alluré)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}
