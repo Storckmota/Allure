@@ -336,6 +336,8 @@ em { font-style: italic; }
   grid-column: 1 / 13;
   grid-row: 2;
   z-index: 2;
+  align-self: center;
+  margin-top: clamp(18px, 4.5vh, 60px);
   display: flex;
   flex-direction: column;
   font-weight: 400;
@@ -348,8 +350,8 @@ em { font-style: italic; }
 .hero-title .mask {
   display: block;
   overflow: hidden;
-  padding: 0.14em 0.12em 0.06em;
-  margin: -0.14em -0.12em -0.06em;
+  padding: 0.14em 0.30em 0.10em;
+  margin: -0.14em -0.30em -0.10em;
 }
 
 .hero-title .line-inner { display: block; }
@@ -393,6 +395,8 @@ em { font-style: italic; }
 }
 
 .line-3 {
+  position: relative;
+  z-index: 0;
   text-align: right;
   margin-right: clamp(12px, 2vw, 40px);
   font-family: var(--font-display);
@@ -401,9 +405,30 @@ em { font-style: italic; }
   letter-spacing: -0.04em;
 }
 
+/* Atmospheric glow for "sua?" — lives outside the line mask so it is
+   never clipped into a hard rectangle, and fades to full transparency
+   well before any edge (soft radial + blur = no visible boundary). */
+.line-3::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  right: clamp(2px, 1vw, 24px);
+  width: min(60vw, 880px);
+  height: 165%;
+  transform: translateY(-50%);
+  background: radial-gradient(
+    closest-side at 62% 50%,
+    rgba(192, 43, 83, 0.40) 0%,
+    rgba(192, 43, 83, 0.16) 46%,
+    rgba(192, 43, 83, 0) 76%
+  );
+  filter: blur(30px);
+  pointer-events: none;
+}
+
 .w-accent {
   color: var(--crimson);
-  text-shadow: 0 10px 60px rgba(192, 43, 83, 0.35);
 }
 
 /* portrait */
@@ -1557,9 +1582,9 @@ em { font-style: italic; }
   .line-2 { margin-left: 6vw; }
 
   .line-3 {
-    font-size: clamp(96px, 30vw, 160px);
-    margin-right: 0;
-    margin-bottom: -0.32em;
+    font-size: clamp(72px, 23vw, 140px);
+    margin-right: clamp(16px, 6vw, 32px);
+    margin-bottom: -0.30em;
     position: relative;
     z-index: 2;
   }
