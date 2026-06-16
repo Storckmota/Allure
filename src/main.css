@@ -1605,20 +1605,23 @@ em { font-style: italic; }
 
   .line-2 { margin: clamp(10px, 2.5vw, 22px) 0 clamp(6px, 1.4vw, 14px) 6vw; }
 
-  /* oversized "sua?", right-aligned and pulled down over the portrait */
+  /* oversized "sua?" stays right-aligned and bold, ABOVE the photo —
+     no negative overlap so it never pushes the portrait off-centre */
   .line-3 {
     font-size: clamp(78px, 24vw, 150px);
-    margin: 0 clamp(12px, 5vw, 28px) -0.30em 0;
+    margin: 0 clamp(12px, 5vw, 28px) 0 0;
     text-align: right;
     position: relative;
     z-index: 2;
   }
 
-  /* portrait back on the right, overlapping "sua?" — editorial asymmetry */
+  /* Ajuste 1 & 2 — portrait CENTERED in the frame as an intentional
+     block with its own presence: not chasing "sua?", with clear
+     breathing room above and below */
   .hero-portrait {
-    width: min(62vw, 286px);
-    align-self: flex-end;
-    margin: 0 4vw 30px 0;
+    width: min(64vw, 288px);
+    align-self: center;
+    margin: clamp(22px, 5vh, 40px) auto clamp(26px, 5vh, 40px);
   }
 
   /* Ajuste 3 — keep the cleaner lower block: aligned copy, strong
@@ -1698,6 +1701,16 @@ em { font-style: italic; }
      glow into a hard pink rectangle around "200"; remove the shadow on
      mobile (the size alone carries the impact). Desktop keeps it. */
   .value-num { text-shadow: none; }
+
+  /* Ajuste 6 — the "200" had its top clipped: line-height 0.82 lets the
+     display glyph overshoot the box top, and the reveal's clip-path
+     inset(0 0 0 0) cropped exactly there. Headroom above the glyph lets
+     it paint whole; the top margin is trimmed to keep the same rhythm. */
+  .indicacao-value {
+    line-height: 0.92;
+    padding-top: 0.14em;
+    margin-top: 4px;
+  }
 }
 
 /* ============================================================
