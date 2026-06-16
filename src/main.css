@@ -1559,33 +1559,27 @@ em { font-style: italic; }
   .header-nav { display: none; }
   .header-cta { padding: 12px 18px; font-size: 12px; }
 
-  /* ---------- HERO — deliberate mobile composition ----------
-     Single editorial column: asymmetry comes from alignment
-     contrast (marca left · sua? right · portrait centered), not
-     from floating overlaps. Decorative layers are quieted so the
-     type and the portrait carry the first fold. */
+  /* ---------- HERO — editorial mobile composition ----------
+     UPPER block restored to the bolder, asymmetric previous take
+     (big "Sua marca", indented "é realmente", oversized "sua?"
+     overlapping the portrait on the right). LOWER block keeps the
+     cleaner alignment from the refinement (full-width CTA, no
+     competing ghost link, quiet foot). Eyebrow and the giant
+     background lettering are dropped on mobile to kill text-over-text. */
 
   /* floating ✦ stars are pure decoration on a small screen → off */
   .hero-stars { display: none; }
 
-  /* the giant "Alluré" outline becomes faint centered atmosphere
-     instead of a competing element bleeding off the left edge */
-  .hero-bg-word {
-    left: 50%;
-    bottom: -0.12em;
-    transform: translateX(-50%);
-    font-size: clamp(180px, 56vw, 300px);
-    opacity: 0.26;
-  }
+  /* Ajuste 4 — the giant "Alluré" outline was passing behind the copy
+     and the CTA (text over text); hide it on mobile, keep it on desktop */
+  .hero-bg-word { display: none; }
 
   .hero-glow {
-    top: auto;
-    bottom: 4%;
-    right: 50%;
-    transform: translateX(50%);
-    width: 118vw;
-    height: 118vw;
-    opacity: 0.85;
+    top: -6%;
+    right: -16%;
+    width: 96vw;
+    height: 96vw;
+    opacity: 0.9;
   }
 
   .hero-stage {
@@ -1594,69 +1588,54 @@ em { font-style: italic; }
     align-items: stretch;
     justify-content: flex-start;
     gap: 0;
-    padding-top: clamp(116px, 16vh, 148px);
+    padding-top: clamp(94px, 13vh, 120px);
     padding-bottom: clamp(28px, 5vh, 44px);
   }
 
-  .hero-eyebrow {
-    margin-bottom: clamp(26px, 5vh, 42px);
-    flex-wrap: wrap;
-    gap: 8px 12px;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-  }
+  /* Ajuste 1 — eyebrow ("Especialistas… / INPI") removed on mobile only */
+  .hero-eyebrow { display: none; }
 
-  .eyebrow-rule { display: none; }
-
+  /* Ajuste 2 — restore the bold, asymmetric type composition */
   .hero-title { margin-top: 0; }
 
-  /* "Sua marca" must hold one line without clipping the right edge */
   .line-1 {
-    font-size: clamp(42px, 12vw, 82px);
-    line-height: 0.92;
+    font-size: clamp(52px, 15.5vw, 96px);
+    line-height: 0.9;
   }
 
-  .line-2 {
-    margin: clamp(12px, 3.5vw, 22px) 0 clamp(4px, 1.5vw, 10px) clamp(4px, 3vw, 16px);
-  }
+  .line-2 { margin: clamp(10px, 2.5vw, 22px) 0 clamp(6px, 1.4vw, 14px) 6vw; }
 
-  .w-caption { font-size: 10px; letter-spacing: 0.34em; gap: 14px; }
-  .w-caption::after { width: clamp(40px, 18vw, 96px); }
-
-  /* impactful but controlled; right-aligned to balance the left title */
+  /* oversized "sua?", right-aligned and pulled down over the portrait */
   .line-3 {
-    font-size: clamp(84px, 26vw, 150px);
-    margin: 0 2vw 0 0;
+    font-size: clamp(78px, 24vw, 150px);
+    margin: 0 clamp(12px, 5vw, 28px) -0.30em 0;
     text-align: right;
     position: relative;
     z-index: 2;
   }
 
-  /* tame the crimson glow behind "sua?" so it reads as a halo, not a blob */
-  .line-3::before { width: min(72vw, 420px); height: 150%; filter: blur(26px); }
-
-  /* portrait centered and integrated, with clear breathing room above/below */
+  /* portrait back on the right, overlapping "sua?" — editorial asymmetry */
   .hero-portrait {
-    width: min(58vw, 252px);
-    align-self: center;
-    margin: clamp(26px, 6vh, 44px) auto clamp(30px, 6vh, 48px);
+    width: min(62vw, 286px);
+    align-self: flex-end;
+    margin: 0 4vw 30px 0;
   }
 
+  /* Ajuste 3 — keep the cleaner lower block: aligned copy, strong
+     full-width CTA, secondary link hidden, quiet centered scroll cue */
   .hero-aside { max-width: none; }
 
   .hero-copy {
     font-size: 15px;
     line-height: 1.65;
-    max-width: 40ch;
+    max-width: 42ch;
     margin-bottom: 24px;
   }
 
-  /* primary CTA carries the fold; secondary link removed to cut competition */
   .hero-ctas { gap: 16px; }
   .btn-main { width: 100%; justify-content: center; padding: 18px 26px; }
   .link-ghost { display: none; }
 
-  /* simplified base: just a quiet scroll cue, place labels removed */
   .hero-foot { justify-content: center; padding-bottom: 18px; }
   .hero-foot .foot-label { display: none; }
 
@@ -1668,15 +1647,23 @@ em { font-style: italic; }
 
   .step { grid-template-columns: 64px 1fr; }
 
-  .processo-stats { grid-template-columns: 1fr; }
+  /* Ajuste 6 — fewer, airier dividers in the stats block: drop the
+     redundant top rule and give each stat more breathing room so the
+     lines don't stack up in one viewport */
+  .processo-stats {
+    grid-template-columns: 1fr;
+    border-top: none;
+    margin-top: clamp(40px, 9vw, 72px);
+  }
 
   .stat {
     border-right: none;
     border-bottom: 1px solid var(--cream-12);
-    padding: 28px 20px;
+    padding: 34px 20px;
   }
 
-  .stat:last-child { border-bottom: none; }
+  .stat:first-child { padding-top: 0; }
+  .stat:last-child { border-bottom: none; padding-bottom: 0; }
 
   .closing-title { max-width: none; }
 
@@ -1706,6 +1693,11 @@ em { font-style: italic; }
   .ref-form { border-radius: 24px 72px 24px 24px; }
 
   .beneficios li { grid-template-columns: 52px 1fr; }
+
+  /* Ajuste 5 — the value's clip-path reveal was cropping this crimson
+     glow into a hard pink rectangle around "200"; remove the shadow on
+     mobile (the size alone carries the impact). Desktop keeps it. */
+  .value-num { text-shadow: none; }
 }
 
 /* ============================================================
