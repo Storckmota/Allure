@@ -957,7 +957,9 @@ em { font-style: italic; }
   padding: clamp(90px, 12vw, 170px) 0;
 }
 
-.indicacao .sec-label { color: var(--crimson); }
+/* lead divider on this light section follows the dark-title pattern of the
+   other refined sections (Essência); the small crimson eyebrow is retired */
+.indicacao .sec-label--lead { color: var(--dark); }
 
 .indicacao-grid {
   display: grid;
@@ -1238,13 +1240,15 @@ em { font-style: italic; }
   padding: clamp(70px, 9vw, 130px) var(--pad) clamp(40px, 5vw, 70px);
 }
 
-.footer-brand img { height: 34px; width: auto; margin-bottom: 20px; }
+.footer-brand img { height: 40px; width: auto; margin-bottom: 16px; }
 
-.footer-brand p {
-  font-size: 14px;
-  line-height: 1.7;
-  color: var(--cream-60);
-  max-width: 34ch;
+/* brand signature — logo lockup + slogan, mirroring "De ideia a legado" */
+.footer-slogan {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--crimson);
 }
 
 .footer-col { display: flex; flex-direction: column; gap: 12px; }
@@ -1312,6 +1316,46 @@ em { font-style: italic; }
   border-top: 1px solid var(--cream-12);
   font-size: 12px;
   color: var(--cream-40);
+}
+
+/* ============================================================
+   FLOATING WHATSAPP — discreet brand-ink pill, gold glyph.
+   Reuses the site WhatsApp number; premium, not a stock plugin.
+   ============================================================ */
+.wa-float {
+  position: fixed;
+  right: clamp(16px, 2.4vw, 32px);
+  bottom: clamp(16px, 2.4vw, 32px);
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  width: clamp(52px, 4.4vw, 60px);
+  height: clamp(52px, 4.4vw, 60px);
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--gold);
+  border: 1px solid rgba(191, 183, 76, 0.45);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  transition: transform 0.4s var(--ease-out), background 0.4s, color 0.4s, box-shadow 0.4s;
+}
+
+.wa-float svg { width: 48%; height: 48%; }
+
+.wa-float:hover {
+  transform: translateY(-3px) scale(1.05);
+  background: var(--gold);
+  color: var(--ink);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.34);
+}
+
+.wa-float:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-float { transition: background 0.3s, color 0.3s; }
+  .wa-float:hover { transform: none; }
 }
 
 /* ============================================================
