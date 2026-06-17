@@ -106,9 +106,9 @@ if (reduceMotion) {
   // The pin distance below is what gates the rest of the page: the section
   // stays pinned until the user scrolls past `end`. The whole choreography is
   // scrubbed, so shortening `end` keeps every beat (words igniting → cream
-  // morph → crimson kicker) intact but proportionally compressed — it simply
-  // releases the next section sooner with far less scroll effort. Mobile gets
-  // an even more direct release and a snappier scrub.
+  // morph) intact but proportionally compressed — it simply releases the next
+  // section sooner with far less scroll effort. Mobile gets an even more
+  // direct release and a snappier scrub.
   const manifestoMM = gsap.matchMedia();
 
   manifestoMM.add(
@@ -129,8 +129,7 @@ if (reduceMotion) {
         },
       })
         .to(words, { opacity: 1, stagger: 0.5, duration: 2, ease: 'none' }, 0)
-        .to(manifesto, { backgroundColor: '#F4EACF', color: '#222323', duration: 3, ease: 'power1.inOut' }, 2.5)
-        .to('.manifesto-kicker', { color: '#C02B53', duration: 3 }, 2.5);
+        .to(manifesto, { backgroundColor: '#F4EACF', color: '#222323', duration: 3, ease: 'power1.inOut' }, 2.5);
     },
   );
 

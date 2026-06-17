@@ -473,6 +473,7 @@ em { font-style: italic; }
   font-size: clamp(40px, 7.2vw, 110px);
   line-height: 1.04;
   letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
 .manifesto-line .word { display: inline-block; }
