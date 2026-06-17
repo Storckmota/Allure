@@ -489,25 +489,31 @@ em { font-style: italic; }
   margin-bottom: clamp(48px, 7vw, 96px);
 }
 
-.sec-index {
-  font-family: var(--font-display);
-  font-size: clamp(40px, 5vw, 76px);
-  line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--dark-60);
-}
-
-.sec-head--dark .sec-index { -webkit-text-stroke: 1px var(--cream-40); }
-
-.sec-rule { flex: 1; height: 1px; background: var(--dark-12); align-self: center; }
-.sec-head--dark .sec-rule { background: var(--cream-12); }
-
 .sec-label {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--crimson);
+}
+
+/* Lead divider — a larger, display-type section opener (no numbering).
+   Used to introduce a segment more presently than the small eyebrow,
+   with a hairline beneath that reads as an elegant editorial divider. */
+.sec-head--lead {
+  display: block;
+  padding: 0 var(--pad) clamp(20px, 2.4vw, 32px);
+  border-bottom: 1px solid var(--dark-12);
+}
+
+.sec-label--lead {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(30px, 4.6vw, 62px);
+  letter-spacing: -0.015em;
+  line-height: 1;
+  text-transform: none;
+  color: var(--dark);
 }
 
 /* ============================================================
@@ -543,25 +549,12 @@ em { font-style: italic; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: 52% 88%;
   transition: transform 1.2s var(--ease-out), filter 1.2s;
   filter: saturate(0.9);
 }
 
 .essencia-figure:hover .essencia-mask img { transform: scale(1.05); filter: saturate(1.05); }
-
-.essencia-caption {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin-top: 18px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.caption-sub { color: var(--dark-60); font-weight: 600; }
 
 .essencia-star {
   position: absolute;
@@ -575,13 +568,19 @@ em { font-style: italic; }
 .essencia-heading {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(42px, 5.6vw, 92px);
-  line-height: 0.98;
-  letter-spacing: -0.025em;
+  font-size: clamp(36px, 4.2vw, 60px);
+  line-height: 1.02;
+  letter-spacing: -0.022em;
   margin-bottom: clamp(28px, 3.5vw, 48px);
 }
 
-.essencia-heading em { color: var(--crimson); }
+/* second part: role line in crimson — keeps the dark/rose contrast of the
+   original two-part heading, now reading as Luísa's name + specialty */
+.essencia-heading em {
+  color: var(--crimson);
+  display: block;
+  margin-top: 0.12em;
+}
 
 .essencia-body p {
   font-size: clamp(16px, 1.35vw, 19px);
@@ -592,46 +591,6 @@ em { font-style: italic; }
 }
 
 .essencia-body p strong { color: var(--dark); }
-
-/* valores */
-.valores {
-  margin: clamp(36px, 5vw, 64px) 0;
-  border-top: 1px solid var(--dark-12);
-}
-
-.valores li {
-  display: grid;
-  grid-template-columns: 70px 1fr;
-  gap: 18px;
-  padding: 22px 0;
-  border-bottom: 1px solid var(--dark-12);
-  transition: padding-left 0.45s var(--ease-out);
-}
-
-.valores li:hover { padding-left: 14px; }
-
-.valor-n {
-  font-family: var(--font-display);
-  font-size: 28px;
-  line-height: 1.2;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--crimson);
-  transition: color 0.35s;
-}
-
-.valores li:hover .valor-n { color: var(--crimson); }
-
-.valores h3 {
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-.valores p {
-  font-size: 14px !important;
-  margin-bottom: 0 !important;
-  line-height: 1.6 !important;
-}
 
 /* line button */
 .btn-line {
@@ -1467,8 +1426,6 @@ em { font-style: italic; }
   .manifesto-line { font-size: clamp(34px, 9.5vw, 64px); }
 
   .sec-head { flex-wrap: wrap; }
-
-  .valores li { grid-template-columns: 52px 1fr; }
 
   .step { grid-template-columns: 64px 1fr; }
 
