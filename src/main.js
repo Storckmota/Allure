@@ -52,10 +52,8 @@ if (reduceMotion) {
 
   // initial states (JS-only, so no-JS users see full content)
   gsap.set('.hero-title .line-inner', { yPercent: 115 });
-  gsap.set('.portrait-mask', { clipPath: 'inset(0% 0% 100% 0%)' });
-  gsap.set('.portrait-mask img', { scale: 1.35 });
-  gsap.set(['.hero-eyebrow', '.hero-aside', '.portrait-caption', '.hero-foot'], { autoAlpha: 0, y: 24 });
-  gsap.set('.hero-bg-word', { autoAlpha: 0 });
+  gsap.set('.hero-photo', { autoAlpha: 0, scale: 1.18 });
+  gsap.set(['.hero-aside', '.hero-foot'], { autoAlpha: 0, y: 24 });
   gsap.set('.site-header', { yPercent: -120 });
 
   const intro = gsap.timeline({ defaults: { ease: 'power4.out' } });
@@ -70,34 +68,30 @@ if (reduceMotion) {
       delay: 0.35,
       onComplete: () => loader.remove(),
     })
-    // hero build-up overlapping the curtain lift
-    .to('.hero-title .line-inner', { yPercent: 0, duration: 1.2, stagger: 0.14 }, '-=0.55')
-    .to('.portrait-mask', { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.3, ease: 'power3.inOut' }, '<0.1')
-    .to('.portrait-mask img', { scale: 1, duration: 1.6, ease: 'power3.out' }, '<')
-    .to('.hero-bg-word', { autoAlpha: 1, duration: 1.4, ease: 'power2.out' }, '<0.2')
-    .to(['.hero-eyebrow', '.hero-aside', '.portrait-caption', '.hero-foot'], {
-      autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.1,
-    }, '-=0.9')
+    // hero build-up overlapping the curtain lift: photo reveals first
+    // (it is the backdrop), then the title rises, then copy + CTA settle
+    .to('.hero-photo', { autoAlpha: 1, scale: 1.05, duration: 1.7, ease: 'power3.out' }, '-=0.7')
+    .to('.hero-title .line-inner', { yPercent: 0, duration: 1.2, stagger: 0.14 }, '<0.3')
+    .to(['.hero-aside', '.hero-foot'], {
+      autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.12,
+    }, '-=0.75')
     .to('.site-header', { yPercent: 0, duration: 0.8, ease: 'power3.out' }, '-=0.7');
 
   /* ----------------------------------------------------------
-     HERO — cursor parallax (stars + portrait drift)
+     HERO — cursor parallax (subtle photo drift)
+     The photo rests at scale 1.05 so this small translate never
+     exposes an edge inside the overflow-clipped media frame.
      ---------------------------------------------------------- */
   if (finePointer) {
     const hero = document.querySelector('.hero');
-    const stars = gsap.utils.toArray('.hero-stars .star');
-    const portraitX = gsap.quickTo('.hero-portrait', 'x', { duration: 1.2, ease: 'power3.out' });
-    const portraitY = gsap.quickTo('.hero-portrait', 'y', { duration: 1.2, ease: 'power3.out' });
+    const photoX = gsap.quickTo('.hero-photo', 'x', { duration: 1.4, ease: 'power3.out' });
+    const photoY = gsap.quickTo('.hero-photo', 'y', { duration: 1.4, ease: 'power3.out' });
 
     hero.addEventListener('mousemove', (e) => {
       const dx = e.clientX / window.innerWidth - 0.5;
       const dy = e.clientY / window.innerHeight - 0.5;
-      portraitX(dx * -18);
-      portraitY(dy * -12);
-      stars.forEach((star) => {
-        const depth = parseFloat(star.dataset.depth || 0.05);
-        gsap.to(star, { x: dx * -600 * depth, y: dy * -400 * depth, duration: 1.4, ease: 'power3.out' });
-      });
+      photoX(dx * -22);
+      photoY(dy * -16);
     });
   }
 
