@@ -486,7 +486,7 @@ em { font-style: italic; }
   align-items: baseline;
   gap: clamp(16px, 2.5vw, 32px);
   padding: 0 var(--pad);
-  margin-bottom: clamp(48px, 7vw, 96px);
+  margin-bottom: clamp(20px, 3vw, 40px);
 }
 
 .sec-label {
@@ -535,11 +535,15 @@ em { font-style: italic; }
   height: 100%;
   object-fit: cover;
   object-position: 52% 88%;
+  /* slight zoom anchored to the bottom crops the studio ceiling out of the
+     top of the frame while keeping Luísa's face well framed */
+  transform: scale(1.12);
+  transform-origin: 50% 100%;
   transition: transform 1.2s var(--ease-out), filter 1.2s;
   filter: saturate(0.9);
 }
 
-.essencia-figure:hover .essencia-mask img { transform: scale(1.05); filter: saturate(1.05); }
+.essencia-figure:hover .essencia-mask img { transform: scale(1.18); filter: saturate(1.05); }
 
 .essencia-star {
   position: absolute;
@@ -553,18 +557,23 @@ em { font-style: italic; }
 .essencia-heading {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(36px, 4.2vw, 60px);
-  line-height: 1.02;
-  letter-spacing: -0.022em;
-  margin-bottom: clamp(28px, 3.5vw, 48px);
+  font-size: clamp(40px, 4.8vw, 68px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin-bottom: clamp(26px, 3.2vw, 42px);
 }
 
-/* second part: role line in crimson — keeps the dark/rose contrast of the
-   original two-part heading, now reading as Luísa's name + specialty */
+/* second part: the role line — clearly a secondary level beneath the name.
+   Roughly half the name's size, still strong in crimson, with breathing
+   room above it so "Luísa Rezende" reads as the protagonist. */
 .essencia-heading em {
-  color: var(--crimson);
   display: block;
-  margin-top: 0.12em;
+  font-size: 0.5em;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--crimson);
+  margin-top: 0.55em;
+  max-width: 20ch;
 }
 
 .essencia-body p {
@@ -1221,10 +1230,13 @@ em { font-style: italic; }
   padding: clamp(70px, 9vw, 130px) var(--pad) clamp(40px, 5vw, 70px);
 }
 
-/* brand signature lockup — "Alluré Branding / De ideia a legado" */
+/* brand signature lockup — "Alluré Branding / De ideia a legado".
+   Fills the brand column for presence; width:100% + max-width keeps it
+   large and well-presented without ever overflowing or being clipped. */
 .footer-signature {
   display: block;
-  width: clamp(220px, 22vw, 300px);
+  width: 100%;
+  max-width: 420px;
   height: auto;
 }
 
