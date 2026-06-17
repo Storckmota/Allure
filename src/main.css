@@ -497,28 +497,9 @@ em { font-style: italic; }
   color: var(--crimson);
 }
 
-/* Lead divider — a larger, display-type section opener (no numbering).
-   Used to introduce a segment more presently than the small eyebrow,
-   with a hairline beneath that reads as an elegant editorial divider. */
-.sec-head--lead {
-  display: block;
-  padding: 0 var(--pad) clamp(20px, 2.4vw, 32px);
-  border-bottom: 1px solid var(--dark-12);
-}
-
-.sec-label--lead {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(30px, 4.6vw, 62px);
-  letter-spacing: -0.015em;
-  line-height: 1;
-  text-transform: none;
-  color: var(--dark);
-}
-
-/* dark-section variant: cream title + cream hairline */
-.sec-head--dark.sec-head--lead { border-bottom-color: var(--cream-12); }
-.sec-head--dark .sec-label--lead { color: var(--cream); }
+/* Section labels are intentionally small, refined eyebrows (no numbering,
+   no long rule) — they identify the segment without competing with the
+   section's main headline. */
 
 /* ============================================================
    01 — ESSÊNCIA  (cream)
@@ -919,17 +900,22 @@ em { font-style: italic; }
 
 .depo-trust {
   display: grid;
-  grid-template-columns: 1fr 1.6fr;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
   margin: clamp(56px, 8vw, 100px) var(--pad) 0;
   border-top: 1px solid var(--cream-12);
 }
 
 .trust-item {
   display: flex;
-  align-items: baseline;
-  gap: 16px;
-  padding: clamp(24px, 3vw, 40px) clamp(8px, 2vw, 32px) 0;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 1.5vw, 22px);
+  padding: clamp(34px, 4.5vw, 60px) clamp(12px, 2.5vw, 40px);
+  min-height: clamp(130px, 13vw, 172px);
 }
+
+.trust-item span { max-width: 28ch; }
 
 .trust-item + .trust-item { border-left: 1px solid var(--cream-12); }
 
@@ -956,10 +942,6 @@ em { font-style: italic; }
   color: var(--dark);
   padding: clamp(90px, 12vw, 170px) 0;
 }
-
-/* lead divider on this light section follows the dark-title pattern of the
-   other refined sections (Essência); the small crimson eyebrow is retired */
-.indicacao .sec-label--lead { color: var(--dark); }
 
 .indicacao-grid {
   display: grid;
@@ -1002,7 +984,6 @@ em { font-style: italic; }
 .value-num {
   font-size: clamp(120px, 16vw, 280px);
   letter-spacing: -0.04em;
-  text-shadow: 0 14px 70px rgba(192, 43, 83, 0.25);
 }
 
 .indicacao-desc {
@@ -1240,15 +1221,11 @@ em { font-style: italic; }
   padding: clamp(70px, 9vw, 130px) var(--pad) clamp(40px, 5vw, 70px);
 }
 
-.footer-brand img { height: 40px; width: auto; margin-bottom: 16px; }
-
-/* brand signature — logo lockup + slogan, mirroring "De ideia a legado" */
-.footer-slogan {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  color: var(--crimson);
+/* brand signature lockup — "Alluré Branding / De ideia a legado" */
+.footer-signature {
+  display: block;
+  width: clamp(220px, 22vw, 300px);
+  height: auto;
 }
 
 .footer-col { display: flex; flex-direction: column; gap: 12px; }
@@ -1468,12 +1445,7 @@ em { font-style: italic; }
 
   .beneficios li { grid-template-columns: 52px 1fr; }
 
-  /* Ajuste 5 — the value's clip-path reveal was cropping this crimson
-     glow into a hard pink rectangle around "200"; remove the shadow on
-     mobile (the size alone carries the impact). Desktop keeps it. */
-  .value-num { text-shadow: none; }
-
-  /* Ajuste 6 — the "200" had its top clipped: line-height 0.82 lets the
+  /* the "200" had its top clipped: line-height 0.82 lets the
      display glyph overshoot the box top, and the reveal's clip-path
      inset(0 0 0 0) cropped exactly there. Headroom above the glyph lets
      it paint whole; the top margin is trimmed to keep the same rhythm. */
