@@ -103,19 +103,36 @@ if (reduceMotion) {
 
   gsap.set(words, { opacity: 0.14 });
 
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: manifesto,
-      start: 'top top',
-      end: '+=170%',
-      scrub: 0.6,
-      pin: true,
-      anticipatePin: 1,
+  // The pin distance below is what gates the rest of the page: the section
+  // stays pinned until the user scrolls past `end`. The whole choreography is
+  // scrubbed, so shortening `end` keeps every beat (words igniting → cream
+  // morph → crimson kicker) intact but proportionally compressed — it simply
+  // releases the next section sooner with far less scroll effort. Mobile gets
+  // an even more direct release and a snappier scrub.
+  const manifestoMM = gsap.matchMedia();
+
+  manifestoMM.add(
+    { isMobile: '(max-width: 768px)', isDesktop: '(min-width: 769px)' },
+    (ctx) => {
+      const { isMobile } = ctx.conditions;
+      const end = isMobile ? '+=80%' : '+=95%';
+      const scrub = isMobile ? 0.4 : 0.5;
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: manifesto,
+          start: 'top top',
+          end,
+          scrub,
+          pin: true,
+          anticipatePin: 1,
+        },
+      })
+        .to(words, { opacity: 1, stagger: 0.5, duration: 2, ease: 'none' }, 0)
+        .to(manifesto, { backgroundColor: '#F4EACF', color: '#222323', duration: 3, ease: 'power1.inOut' }, 2.5)
+        .to('.manifesto-kicker', { color: '#C02B53', duration: 3 }, 2.5);
     },
-  })
-    .to(words, { opacity: 1, stagger: 0.5, duration: 2, ease: 'none' }, 0)
-    .to(manifesto, { backgroundColor: '#F4EACF', color: '#222323', duration: 3, ease: 'power1.inOut' }, 2.5)
-    .to('.manifesto-kicker', { color: '#C02B53', duration: 3 }, 2.5);
+  );
 
   /* ----------------------------------------------------------
      ESSÊNCIA — masked portrait entrance
