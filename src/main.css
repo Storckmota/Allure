@@ -264,8 +264,13 @@ em { font-style: italic; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 70% 26%;
-  transform: scale(1.05);
+  /* editorial framing focused on the gesture of work — the necklace, the
+     hand, the green stylus and the tablet read together as one composition.
+     The face stays out (at most a sliver of chin) and the hips/clothing are
+     kept below the frame. No mirroring — natural orientation. */
+  object-position: 54% 50%;
+  transform: scale(1.08);
+  transform-origin: 50% 50%;
   will-change: transform;
   filter: saturate(0.9) contrast(1.05) brightness(1.02);
 }
@@ -534,16 +539,19 @@ em { font-style: italic; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 52% 88%;
-  /* slight zoom anchored to the bottom crops the studio ceiling out of the
-     top of the frame while keeping Luísa's face well framed */
-  transform: scale(1.12);
-  transform-origin: 50% 100%;
+  /* editorial portrait — no ceiling in this frame. Bias upward to keep the
+     face fragment, hand and stylus as the focal gesture and let the rounded
+     mask curve into the tablet, dropping only the darker lower lap. */
+  object-position: 50% 16%;
+  transform: scale(1.04);
+  transform-origin: 50% 30%;
   transition: transform 1.2s var(--ease-out), filter 1.2s;
-  filter: saturate(0.9);
+  /* subtle, natural lift — keeps skin tones realistic, just a touch more
+     presence and clarity without looking retouched */
+  filter: saturate(0.96) contrast(1.03) brightness(1.02);
 }
 
-.essencia-figure:hover .essencia-mask img { transform: scale(1.18); filter: saturate(1.05); }
+.essencia-figure:hover .essencia-mask img { transform: scale(1.1); filter: saturate(1.0) contrast(1.04) brightness(1.03); }
 
 .essencia-star {
   position: absolute;
@@ -743,30 +751,53 @@ em { font-style: italic; }
   padding-bottom: 6px;
 }
 
-/* film-strip band: pure black to merge with the composite's background */
+/* brand wall: a smooth infinite marquee of uniform logo tiles. The band sits
+   on the section's dark ground with soft edge fades so logos drift in/out
+   instead of hard-cutting. */
 .marcas-band {
-  background: #000;
   border-top: 1px solid var(--cream-12);
   border-bottom: 1px solid var(--cream-12);
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  padding: clamp(30px, 4vw, 52px) 0;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
 }
 
 .marcas-track {
   display: flex;
   align-items: center;
   width: max-content;
-  animation: marcas-run 42s linear infinite;
+  /* two identical halves → translate exactly -50% for a seamless, jump-free
+     loop. Spacing lives on each card's margin (not flex gap) so every half
+     carries its own trailing space and -50% lands pixel-perfect. Slow +
+     linear keeps it calm and premium. */
+  animation: marcas-run 80s linear infinite;
+  will-change: transform;
 }
 
 .marcas-band:hover .marcas-track { animation-play-state: paused; }
 
-.marcas-track img {
-  height: clamp(140px, 17vw, 220px);
-  width: auto;
-  max-width: none;
+/* each logo gets the same square card: consistent size, gentle radius, a
+   hairline frame and a light ground so every brand reads cleanly on the dark
+   section without distortion. */
+.marca-card {
   flex-shrink: 0;
+  width: clamp(108px, 12vw, 152px);
+  height: clamp(108px, 12vw, 152px);
+  margin-right: clamp(16px, 1.6vw, 26px);
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--cream);
+  border: 1px solid var(--cream-12);
+  box-shadow: 0 18px 40px -28px rgba(0, 0, 0, 0.9);
+}
+
+.marca-card img {
+  width: 100%;
+  height: 100%;
+  /* square logo in a square card → whole mark shown, never stretched */
+  object-fit: cover;
+  display: block;
 }
 
 @keyframes marcas-run {
@@ -1351,7 +1382,13 @@ em { font-style: italic; }
    RESPONSIVE
    ============================================================ */
 @media (max-width: 1024px) {
-  .hero-photo { object-position: 64% 22%; }
+  /* balanced editorial crop (tablet): profile + hand + tablet together,
+     natural orientation, no extreme zoom */
+  .hero-photo {
+    object-position: 52% 52%;
+    transform: scale(1.16);
+    transform-origin: 50% 50%;
+  }
 
   .essencia-grid,
   .processo-grid,
@@ -1380,10 +1417,12 @@ em { font-style: italic; }
      darkened lower band for legibility. One coherent type statement,
      full-width CTA, quiet centered scroll cue. */
 
-  /* portrait photo: keep Luísa framed on a narrow screen */
+  /* balanced editorial crop on mobile: the working scene — profile, hand +
+     stylus and tablet — without an extreme close-up or full body */
   .hero-photo {
-    object-position: 62% 18%;
-    transform: scale(1.04);
+    object-position: 50% 48%;
+    transform: scale(1.4);
+    transform-origin: 50% 50%;
   }
 
   /* stronger bottom wash so the title + copy stay legible on mobile */
@@ -1434,8 +1473,13 @@ em { font-style: italic; }
 
   .footer-bottom { flex-direction: column; }
 
-  /* marcas */
-  .marcas-track img { height: clamp(110px, 26vw, 150px); }
+  /* marcas: comfortable tile size on mobile so logos never feel cramped */
+  .marca-card {
+    width: clamp(120px, 34vw, 150px);
+    height: clamp(120px, 34vw, 150px);
+    margin-right: 14px;
+    border-radius: 16px;
+  }
 
   /* depoimentos */
   .depo-slide { width: 84vw; }
@@ -1484,11 +1528,14 @@ em { font-style: italic; }
   .loader { display: none; }
   .cursor { display: none !important; }
 
-  /* marcas: static, natively scrollable strip instead of marquee */
+  /* marcas: static, natively scrollable strip instead of marquee — drop the
+     duplicated half so each brand shows once */
   .marcas-track { animation: none; }
-  .marcas-track img[aria-hidden]:nth-child(n + 3) { display: none; }
+  .marca-card:nth-child(n + 34) { display: none; }
   .marcas-band {
     overflow-x: auto;
+    padding-left: var(--pad);
+    padding-right: var(--pad);
     -webkit-mask-image: none;
     mask-image: none;
   }
