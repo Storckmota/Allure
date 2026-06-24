@@ -539,19 +539,19 @@ em { font-style: italic; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* editorial portrait — no ceiling in this frame. Bias upward to keep the
-     face fragment, hand and stylus as the focal gesture and let the rounded
-     mask curve into the tablet, dropping only the darker lower lap. */
-  object-position: 50% 16%;
-  transform: scale(1.04);
-  transform-origin: 50% 30%;
+  /* smiling portrait — the studio ceiling was physically cropped out of the
+     source (luisa-essencia-sorrindo-final.jpg), so the top of the frame is
+     already clean wall. Only a gentle zoom for presence is needed. */
+  object-position: 50% 40%;
+  transform: scale(1.08);
+  transform-origin: 50% 40%;
   transition: transform 1.2s var(--ease-out), filter 1.2s;
   /* subtle, natural lift — keeps skin tones realistic, just a touch more
      presence and clarity without looking retouched */
   filter: saturate(0.96) contrast(1.03) brightness(1.02);
 }
 
-.essencia-figure:hover .essencia-mask img { transform: scale(1.1); filter: saturate(1.0) contrast(1.04) brightness(1.03); }
+.essencia-figure:hover .essencia-mask img { transform: scale(1.14); filter: saturate(1.0) contrast(1.04) brightness(1.03); }
 
 .essencia-star {
   position: absolute;
@@ -875,6 +875,9 @@ em { font-style: italic; }
   overflow: hidden;
   border: 1px solid var(--cream-12);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  /* light card so the dark text of the real WhatsApp feedbacks stays legible
+     on the section's dark ground */
+  background: #f4f1ea;
 }
 
 .depo-shot img {
@@ -883,19 +886,65 @@ em { font-style: italic; }
   display: block;
 }
 
-.depo-name {
+/* authoring row — real person/brand under each feedback: avatar, name,
+   brand and (when available) the brand logo. Keeps the dark, premium tone. */
+.depo-author {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 18px;
-  font-size: 12px;
+  gap: 16px;
+  margin-top: 26px;
+  padding: 0 2px;
+}
+
+.depo-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--cream-12);
+  background: var(--cream-12);
+}
+
+.depo-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.depo-person {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--cream);
+}
+
+.depo-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: var(--cream-60);
+  /* brighter than --cream-60 so the brand stays clearly legible while still
+     reading as secondary to the person's name */
+  color: rgba(244, 234, 207, 0.74);
 }
 
 .depo-star { color: var(--crimson); }
+
+.depo-logo {
+  width: 60px;
+  height: 60px;
+  margin-left: auto;
+  border-radius: 14px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--cream-12);
+}
 
 .depo-nav {
   display: flex;
@@ -1417,12 +1466,16 @@ em { font-style: italic; }
      darkened lower band for legibility. One coherent type statement,
      full-width CTA, quiet centered scroll cue. */
 
-  /* balanced editorial crop on mobile: the working scene — profile, hand +
-     stylus and tablet — without an extreme close-up or full body */
+  /* balanced editorial crop on mobile: a working scene that reads top-to-
+     bottom as a sliver of chin → necklace/collar → hand + green stylus →
+     tablet. On a portrait viewport the photo already fills the height, so
+     object-position Y is inert here — the vertical framing is driven by the
+     transform-origin (window centre) and scale (zoom). Origin biased above
+     centre brings the collar/necklace in and keeps the face from dominating. */
   .hero-photo {
-    object-position: 50% 48%;
-    transform: scale(1.4);
-    transform-origin: 50% 50%;
+    object-position: 58% 50%;
+    transform: scale(1.26);
+    transform-origin: 50% 44%;
   }
 
   /* stronger bottom wash so the title + copy stay legible on mobile */
@@ -1510,6 +1563,17 @@ em { font-style: italic; }
     padding-top: 0.14em;
     margin-top: 4px;
   }
+}
+
+/* very narrow phones: trim the authoring avatar/logo a touch so the brand
+   line stays on one row next to the logo (Amado) without cramping — keeps
+   good presence while staying tidy */
+@media (max-width: 430px) {
+  .depo-author { gap: 13px; }
+  .depo-avatar { width: 56px; height: 56px; }
+  .depo-logo { width: 52px; height: 52px; }
+  .depo-person { font-size: 18px; }
+  .depo-brand { font-size: 12px; letter-spacing: 0.1em; gap: 7px; }
 }
 
 /* ============================================================
